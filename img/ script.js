@@ -4,19 +4,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     
-    menuToggle.addEventListener('click', function() {
-        navLinks.classList.toggle('active');
-        menuToggle.classList.toggle('active');
-    });
-    
-    // Fechar menu ao clicar em um link
-    const menuLinks = document.querySelectorAll('.menu-link');
-    menuLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            navLinks.classList.remove('active');
-            menuToggle.classList.remove('active');
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
         });
-    });
+        
+        // Fechar menu ao clicar em um link
+        const menuLinks = document.querySelectorAll('.menu-link');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+                menuToggle.classList.remove('active');
+            });
+        });
+    }
     
     // Efeito de rolagem suave
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -24,12 +26,13 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             
             const targetId = this.getAttribute('href');
-            if(targetId === '#') return;
+            if (targetId === '#') return;
             
             const targetElement = document.querySelector(targetId);
-            if(targetElement) {
+            if (targetElement) {
+                const headerHeight = document.querySelector('header').offsetHeight;
                 window.scrollTo({
-                    top: targetElement.offsetTop - 80,
+                    top: targetElement.offsetTop - headerHeight,
                     behavior: 'smooth'
                 });
             }
@@ -39,25 +42,72 @@ document.addEventListener('DOMContentLoaded', function() {
     // Efeito de mudança no header ao rolar
     window.addEventListener('scroll', function() {
         const header = document.querySelector('header');
-        if(window.scrollY > 100) {
-            header.style.backgroundColor = 'rgba(52, 17, 0, 0.98)';
-            header.style.boxShadow = '0 4px 25px rgba(0, 0, 0, 0.5)';
-        } else {
-            header.style.backgroundColor = 'rgba(52, 17, 0, 0.95)';
-            header.style.boxShadow = '0 4px 25px rgba(0, 0, 0, 0.4)';
+        if (header) {
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 2px 25px rgba(0, 0, 0, 0.08)';
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.05)';
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
+            }
         }
     });
     
     // Formulário de contato
     const form = document.querySelector('.formulario');
-    if(form) {
+    if (form) {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Aqui você pode adicionar lógica para enviar o formulário
-            // Por enquanto, apenas mostra um alerta
-            alert('Obrigado pela mensagem! Em breve entrarei em contato.');
+            // Coletar dados do formulário
+            const nome = form.querySelector('input[type="text"]').value;
+            const email = form.querySelector('input[type="email"]').value;
+            const mensagem = form.querySelector('textarea').value;
+            
+            // Validação simples
+            if (!nome || !email || !mensagem) {
+                alert('Por favor, preencha todos os campos.');
+                return;
+            }
+            
+            // Aqui você normalmente enviaria para um backend
+            // Por enquanto, apenas mostra um alerta de sucesso
+            alert(`Obrigado pela mensagem, ${nome}! Em breve entrarei em contato.`);
             form.reset();
+            
+            // Animação de sucesso
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '✓ Mensagem Enviada!';
+            submitBtn.style.background = 'linear-gradient(135deg, #10b981, #34d399)';
+            
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.style.background = 'linear-gradient(135deg, #1e40af, #3b82f6)';
+            }, 3000);
         });
     }
+    
+    // Adicionar animação de entrada para elementos
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    // Observar elementos para animação
+    document.querySelectorAll('.projeto-card, .habilidade-categoria, .dado-item').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
 });
