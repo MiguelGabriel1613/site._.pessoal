@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miguel Gabriel - Página Pessoal</title>
+</head>
+<body>
+    <nav class="navegacao">
+        <ul class="menu">
+            <li class="Texto">
+                <a href="#inicio" class="menu-link">Início</a>
+            </li>
+            <li class="Texto">
+                <a href="#sobre" class="menu-link">Sobre</a>
+            </li>
+            <li class="Texto">
+                <a href="#contato" class="menu-link">Contato</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <main id="inicio" class="principal">
+        <div class="div-foto">
+            <img src="img/perfil2.png" class="foto-perfil">
+            <h1>Miguel Gabriel</h1>
+            <p class="sub-titulo">Desenvolvedor Web</p>
+            <div class="info-contato">
+                <p><i class="fas fa-phone"></i> WhatsApp: (44) 99814-6451</p>
+                <p><i class="fas fa-envelope"></i> Email: luz.miguelgabriel@gmail.com</p>
+                <p><i class="fab fa-instagram"></i> Instagram: @miguel._.gabriel._._</p>
+                <p><i class="fas fa-map-marker-alt"></i> Localização: Campo Mourão - PR</p>
+            </div>
+        </div>
+    </main>
+    
+    <section id="sobre" class="sobre">
+        <h2 class="sobre-titulo">Sobre Mim</h2>
+        <div class="sobre-caixa">
+            <p class="sobre-paragrafo">
+                Olá! Meu nome é Miguel Gabriel, sou apaixonado por tecnologia e desenvolvimento web. 
+                Atualmente moro em Campo Mourão, Paraná, e estou sempre buscando aprender novas habilidades 
+                e tecnologias para criar soluções inovadoras. Quando não estou codando, gosto de explorar 
+                novas ferramentas e acompanhar as tendências do mundo digital.
+            </p>
+            <div class="habilidades">
+                <h3>Habilidades:</h3>
+                <ul>
+                    <li>Desenvolvimento Web (HTML, CSS, JavaScript)</li>
+                    <li>Design Responsivo</li>
+                    <li>Comunicação e Trabalho em Equipe</li>
+                    <li>Resolução de Problemas</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contato" class="contato">
+        <h1 class="contato-titulo">Entre em Contato</h1>
+        <form class="formulario-contato" id="formulario">
+            <div class="forms">
+                <input placeholder="Seu nome" class="campo-form" id="nome" required>
+            </div>
+            <div class="forms">
+                <input placeholder="Seu e-mail" class="campo-form" id="email" type="email">
+            </div>
+            <div class="forms">
+                <textarea placeholder="Digite sua mensagem" class="campo-form" id="mensagem" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="botao">Enviar WhatsApp</button>
+        </form>
+        
+        <div class="contato-direto">
+            <h3>Ou entre em contato diretamente:</h3>
+            <div class="contato-botoes">
+                <a href="https://wa.me/5544998146451" class="botao-contato whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+                <a href="mailto:luz.miguelgabriel@gmail.com" class="botao-contato email">
+                    <i class="fas fa-envelope"></i> E-mail
+                </a>
+                <a href="https://instagram.com/miguel._.gabriel._._" class="botao-contato instagram" target="_blank">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="espaco"></div>
+    
+    <footer>
+        <p>&copy; 2023 Miguel Gabriel. Todos os direitos reservados.</p>
+        <p>Campo Mourão - Paraná</p>
+    </footer>
+
+    <script>
+        document.getElementById('formulario').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nome = document.getElementById('nome').value;
+            const mensagem = document.getElementById('mensagem').value;
+            
+            // Formata a mensagem para o WhatsApp
+            const texto = `Olá Miguel! Meu nome é ${nome}. ${mensagem}`;
+            const textoCodificado = encodeURIComponent(texto);
+            const numero = '5544998146451';
+            
+            // Redireciona para o WhatsApp
+            window.open(`https://wa.me/${numero}?text=${textoCodificado}`, '_blank');
+        });
+    </script>
+</body>
+</html>
